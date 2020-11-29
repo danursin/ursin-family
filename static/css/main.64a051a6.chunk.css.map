@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/style/site.scss"],"names":[],"mappings":"AAAA,QACI,4BAA6B,CADjC,gBAGQ,iBAAkB","file":"main.64a051a6.chunk.css","sourcesContent":["details {\r\n    border-bottom: 1px solid #888;\r\n    & details {\r\n        padding-left: 1rem;\r\n    }\r\n}\r\n"]}
