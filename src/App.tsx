@@ -1,21 +1,16 @@
 import "./style/site.scss";
 
+import PersonNode from "./component/PersonNode";
 import React from "react";
 import family from "./family";
 
 const App: React.FC = () => {
+    const levelZeros = family.filter((f) => f.level === 0);
     return (
         <>
-            {family.map((person) => {
-                const { id, first, middle, last, maiden } = person;
-                const name = `${last}, ${first} ${middle} ${maiden ? `, née ${maiden}` : ""}`;
-                return (
-                    <details key={id}>
-                        <summary>{name}</summary>
-                        <p>I am some detail about {name}</p>
-                    </details>
-                );
-            })}
+            {levelZeros.map((person) => (
+                <PersonNode key={person.id} person={person} />
+            ))}
         </>
     );
 };

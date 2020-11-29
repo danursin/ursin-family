@@ -1,115 +1,119 @@
 [
     {
-        "key": 11,
+        "id": 11,
         "gender": "M",
         "first": "Benjamin",
         "middle": "Michael",
         "last": "Ursin",
         "dob": "2016-04-16",
-        "mother": 5,
-        "father": 4
+        "motherId": 5,
+        "fatherId": 4
     },
     {
-        "key": 10,
+        "id": 10,
         "gender": "F",
         "first": "Claire",
         "middle": "Marie",
         "last": "Ursin",
         "dob": "2019-03-22",
-        "mother": 7,
-        "father": 9
+        "motherId": 7,
+        "fatherId": 9
     },
     {
-        "key": 9,
+        "id": 9,
         "gender": "M",
         "first": "Daniel",
         "middle": "Joseph",
         "last": "Ursin",
         "dob": "1987-02-21",
-        "relations": [{ "type": "spouse", "id": 7 }],
-        "children": [8, 10]
+        "fatherId": 2,
+        "motherId": 1,
+        "relationIds": [{ "type": "spouse", "id": 7 }],
+        "childrenIds": [8, 10]
     },
     {
-        "key": 8,
+        "id": 8,
         "gender": "F",
         "first": "Eleanor",
         "middle": "Rose",
         "last": "Ursin",
         "dob": "2017-08-27",
-        "mother": 7,
-        "father": 9
+        "motherId": 7,
+        "fatherId": 9
     },
     {
-        "key": 7,
+        "id": 7,
         "gender": "F",
         "first": "Erin",
         "middle": "Marie",
         "last": "Ursin",
         "maiden": "Sharratt",
         "dob": "1986-12-05",
-        "relations": [{ "type": "spouse", "id": 9 }],
-        "children": [8, 10]
+        "relationIds": [{ "type": "spouse", "id": 9 }],
+        "childrenIds": [8, 10]
     },
     {
-        "key": 6,
+        "id": 6,
         "gender": "M",
         "first": "James",
         "middle": "Robert",
         "last": "Ursin",
         "dob": "2019-02-23",
-        "mother": 5,
-        "father": 4
+        "motherId": 5,
+        "fatherId": 4
     },
     {
-        "key": 5,
+        "id": 5,
         "gender": "F",
         "first": "Laura",
         "middle": "Michelle",
         "last": "Ursin",
         "maiden": "Hepler",
         "dob": "1985-08-03",
-        "relations": [{ "type": "spouse", "id": 4 }],
-        "children": [6, 11]
+        "relationIds": [{ "type": "spouse", "id": 4 }],
+        "childrenIds": [6, 11]
     },
     {
-        "key": 4,
+        "id": 4,
         "gender": "M",
         "first": "Michael",
         "middle": "Steven",
         "last": "Ursin",
         "dob": "1984-01-01",
-        "relations": [{ "type": "spouse", "id": 5 }],
-        "children": [6, 11]
+        "fatherId": 2,
+        "motherId": 1,
+        "relationIds": [{ "type": "spouse", "id": 5 }],
+        "childrenIds": [6, 11]
     },
     {
-        "key": 3,
+        "id": 3,
         "gender": "F",
         "first": "Rebecca",
         "middle": "Lynn",
         "last": "Ursin",
         "dob": "1992-11-17",
-        "father": 2,
-        "mother": 1
+        "fatherId": 2,
+        "motherId": 1
     },
     {
-        "key": 2,
+        "id": 2,
         "gender": "M",
         "first": "Steven",
         "middle": "Allen",
         "last": "Ursin",
         "dob": "1957-03-23",
-        "relations": [{ "type": "spouse", "id": 1 }],
-        "children": [3, 4, 9]
+        "relationIds": [{ "type": "spouse", "id": 1 }],
+        "childrenIds": [3, 4, 9]
     },
     {
-        "key": 1,
+        "id": 1,
         "gender": "F",
         "first": "Theresa",
         "middle": "Lynn",
         "last": "Ursin",
         "maiden": "Ralenkotter",
         "dob": "1956-08-30",
-        "relations": [{ "type": "spouse", "id": 2 }],
-        "children": [3, 4, 9]
+        "relationIds": [{ "type": "spouse", "id": 2 }],
+        "childrenIds": [3, 4, 9]
     }
 ]

@@ -1,3 +1,4 @@
+export type Relation = "spouse";
 export interface Person {
     id: number;
     gender: "M" | "F";
@@ -6,8 +7,13 @@ export interface Person {
     last: string;
     maiden?: string;
     dob: string;
-    relations?: { type: "spouse"; id: number }[];
-    children?: number[];
-    father?: number;
-    mother?: number;
+    relationIds?: { type: Relation; id: number }[];
+    relations?: { type: Relation; person: Person }[];
+    childrenIds?: number[];
+    children?: Person[];
+    fatherId?: number;
+    father?: Person;
+    motherId?: number;
+    mother?: Person;
+    level?: number;
 }
