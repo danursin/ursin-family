@@ -2,7 +2,7 @@
     "name": "ursin-family",
     "version": "0.1.0",
     "private": true,
-    "homepage": "http://danursin.github.io/ursin-family",
+    "homepage": "https://danursin.github.io/ursin-family",
     "dependencies": {
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
