@@ -1,9 +1,6 @@
-.grid {
-    display: flex;
-    flex-direction: row;
-}
-.person {
-    padding: 0.5rem 0.75rem;
-    border: 1px solid black;
-    border-radius: 0.25rem;
+details {
+    border-bottom: 1px solid #888;
+    & details {
+        padding-left: 1rem;
+    }
 }
