@@ -4,11 +4,13 @@
     "private": true,
     "homepage": "https://danursin.github.io/ursin-family",
     "dependencies": {
+        "d3": "^6.2.0",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
         "react-scripts": "4.0.1"
     },
     "devDependencies": {
+        "@types/d3": "^6.2.0",
         "@types/node": "^14.0.0",
         "@types/react": "^16.14.2",
         "@types/react-dom": "^16.9.10",
