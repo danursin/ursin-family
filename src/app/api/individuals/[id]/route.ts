@@ -12,7 +12,7 @@ export async function GET(_: Request, ctx: { params: Promise<{ id: IndividualIde
     return NextResponse.json({ individual });
 }
 
-export async function PUT(req: Request, ctx: { params: Promise<{ id: string }> }) {
+export async function PUT(req: Request, ctx: { params: Promise<{ id: IndividualIdentifier }> }) {
     const { id } = await ctx.params;
     const gedcomData = await getFamilyAsJson();
     const individuals = gedcomData.individuals;
