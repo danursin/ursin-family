@@ -1,8 +1,6 @@
+// a React component that uses an iframe
 export default function TopolaViewer() {
-    return (
-        <iframe
-            style={{ width: "100%", height: "90vh", margin: 0 }}
-            src="https://topolaproxy.bieda.it/https://ursin-family.vercel.app/api"
-        ></iframe>
-    );
+    const gedcomUrl = "https://ursin-family.vercel.app/api"; // your API endpoint
+    const src = `https://pewu.github.io/topola-viewer/#/view?url=${encodeURIComponent(gedcomUrl)}&embedded=true`;
+    return <iframe src={src} style={{ width: "100%", height: "90vh", border: "0" }} allowFullScreen />;
 }
