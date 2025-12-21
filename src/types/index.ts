@@ -12,16 +12,16 @@ export type Individual = {
     SEX?: "M" | "F";
     BIRT?: string; // Birth date in YYYY-MM-DD format
     DEAT?: string; // Death date in YYYY-MM-DD format
-    FAMC?: FamilyIdentifier | Family;
-    FAMS?: FamilyIdentifier | Family;
+    FAMC?: FamilyIdentifier;
+    FAMS?: FamilyIdentifier;
     OBJE?: MultimediaObject[];
 };
 
 export type Family = {
     _id: FamilyIdentifier;
-    HUSB?: IndividualIdentifier | Individual;
-    WIFE?: IndividualIdentifier | Individual;
-    CHIL?: (IndividualIdentifier | Individual)[];
+    HUSB?: IndividualIdentifier;
+    WIFE?: IndividualIdentifier;
+    CHIL?: IndividualIdentifier[];
     MARR?: string; // Marriage date in YYYY-MM-DD format
     DIV?: string; // Divorce date in YYYY-MM-DD format
 };

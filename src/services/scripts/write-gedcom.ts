@@ -59,12 +59,12 @@ export function toGedcomString(gedcom: GedcomData): string {
         }
 
         // Family connection
-        const fams = gedcom.families.filter((fam) => fam.HUSB === individual || fam.WIFE === individual);
+        const fams = gedcom.families.filter((fam) => fam.HUSB === individual._id || fam.WIFE === individual._id);
         for (const fam of fams) {
             lines.push(`1 FAMS ${fam._id}`);
         }
 
-        const famc = gedcom.families.find((fam) => fam.CHIL?.includes(individual));
+        const famc = gedcom.families.find((fam) => fam.CHIL?.includes(individual._id));
         if (famc) {
             lines.push(`1 FAMC ${famc._id}`);
         }
@@ -75,14 +75,14 @@ export function toGedcomString(gedcom: GedcomData): string {
         lines.push(`0 ${family._id} FAM`);
 
         if (family.HUSB) {
-            lines.push(`1 HUSB ${(family.HUSB as Individual)._id}`);
+            lines.push(`1 HUSB ${family.HUSB}`);
         }
         if (family.WIFE) {
-            lines.push(`1 WIFE ${(family.WIFE as Individual)._id}`);
+            lines.push(`1 WIFE ${family.WIFE}`);
         }
         if (family.CHIL) {
             for (const child of family.CHIL) {
-                lines.push(`1 CHIL ${(child as Individual)._id}`);
+                lines.push(`1 CHIL ${child}`);
             }
         }
         if (family.MARR) {

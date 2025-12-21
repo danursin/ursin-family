@@ -1,12 +1,14 @@
+import * as crypto from "node:crypto";
+
 import type { Family, GedcomData, Individual, User } from "../types/index.js";
 
 const S_DAN_URSIN: User = {
-    _id: "@U_DAN_URSIN@",
+    _id: `@U_$${crypto.randomUUID()}@`,
     NAME: "Dan Ursin"
 };
 
 const I_DAN_URSIN: Individual = {
-    _id: "@I_Dan_Ursin@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Daniel Joseph /Ursin/",
     GIVN: "Daniel Joseph",
     SURN: "Ursin",
@@ -15,7 +17,7 @@ const I_DAN_URSIN: Individual = {
 };
 
 const I_ERIN_URSIN: Individual = {
-    _id: "@I_Erin_Ursin@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Erin Marie /Ursin/",
     GIVN: "Erin Marie",
     SURN: "Ursin",
@@ -24,7 +26,7 @@ const I_ERIN_URSIN: Individual = {
 };
 
 const I_ELEANOR_URSIN: Individual = {
-    _id: "@I_Eleanor_Ursin@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Eleanor Rose /Ursin/",
     GIVN: "Eleanor Rose",
     SURN: "Ursin",
@@ -33,7 +35,7 @@ const I_ELEANOR_URSIN: Individual = {
 };
 
 const I_CLAIRE_URSIN: Individual = {
-    _id: "@I_Claire_Ursin@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Claire Marie /Ursin/",
     GIVN: "Claire Marie",
     SURN: "Ursin",
@@ -42,7 +44,7 @@ const I_CLAIRE_URSIN: Individual = {
 };
 
 const I_ROBERT_URSIN: Individual = {
-    _id: "@I_Robert_Ursin@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Robert Donald /Ursin/",
     GIVN: "Robert Donald",
     SURN: "Ursin",
@@ -51,7 +53,7 @@ const I_ROBERT_URSIN: Individual = {
 };
 
 const I_THERESA_URSIN: Individual = {
-    _id: "@I_Theresa_Ursin@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Theresa Lynn /Ursin/",
     GIVN: "Theresa Lynn",
     SURN: "Ursin",
@@ -60,7 +62,7 @@ const I_THERESA_URSIN: Individual = {
 };
 
 const I_STEVEN_URSIN: Individual = {
-    _id: "@I_Steven_Ursin@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Steven Allen /Ursin/",
     GIVN: "Steven Allen",
     SURN: "Ursin",
@@ -69,7 +71,7 @@ const I_STEVEN_URSIN: Individual = {
 };
 
 const I_MICHAEL_URSIN: Individual = {
-    _id: "@I_Michael_Ursin@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Michael Steven /Ursin/",
     GIVN: "Michael Steven",
     SURN: "Ursin",
@@ -78,7 +80,7 @@ const I_MICHAEL_URSIN: Individual = {
 };
 
 const I_REBECCA_URSIN: Individual = {
-    _id: "@I_Rebecca_Ursin@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Rebecca Lynn /Ursin/",
     GIVN: "Rebecca Lynn",
     SURN: "Ursin",
@@ -87,21 +89,21 @@ const I_REBECCA_URSIN: Individual = {
 };
 
 const I_DONALD_URSIN: Individual = {
-    _id: "@I_Donald_Ursin@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Donald Joseph /Ursin/",
     SURN: "Ursin",
     GIVN: "Donald Joseph"
 };
 
 const I_JOYCE_URSIN: Individual = {
-    _id: "@I_Joyce_Ursin@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Joyce /Ursin/",
     SURN: "Ursin",
     GIVN: "Joyce"
 };
 
 const I_KELLY_SHARRATT: Individual = {
-    _id: "@I_Kelly_Sharratt@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Kelly Lynn /Sharratt/",
     GIVN: "Kelly Lynn",
     SURN: "Sharratt",
@@ -110,7 +112,7 @@ const I_KELLY_SHARRATT: Individual = {
 };
 
 const I_CHRISTINE_SHARRATT: Individual = {
-    _id: "@I_Christine_Sharratt@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Christine /Sharratt/",
     GIVN: "Christine",
     SURN: "Sharratt",
@@ -118,7 +120,7 @@ const I_CHRISTINE_SHARRATT: Individual = {
 };
 
 const I_KEN_SHARRATT: Individual = {
-    _id: "@I_Ken_Sharratt@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Ken /Sharratt/",
     GIVN: "Ken",
     SURN: "Sharratt",
@@ -126,90 +128,90 @@ const I_KEN_SHARRATT: Individual = {
 };
 
 const I_THOMAS_RALENKOTTER: Individual = {
-    _id: "@I_Thomas_Ralenkotter@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Thomas /Ralenkotter/",
     GIVN: "Thomas",
     SURN: "Ralenkotter"
 };
 
 const I_GERALDINE_PILGRIM: Individual = {
-    _id: "@I_Geraldine_Pilgrim@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Geraldine /Pilgrim/",
     GIVN: "Geraldine",
     SURN: "Pilgrim"
 };
 
 const I_TODD_RALENKOTTER: Individual = {
-    _id: "@I_Todd_Ralenkotter@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Todd /Ralenkotter/",
     GIVN: "Todd",
     SURN: "Ralenkotter"
 };
 
 const I_TONY_RALENKOTTER: Individual = {
-    _id: "@I_Tony_Ralenkotter@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Tony /Ralenkotter/",
     GIVN: "Tony",
     SURN: "Ralenkotter"
 };
 
 const I_ANNE_RALENKOTTER: Individual = {
-    _id: "@I_Anne_Ralenkotter@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Anne /Ralenkotter/",
     GIVN: "Anne",
     SURN: "Ralenkotter"
 };
 
 const I_MARIA_RALENKOTTER: Individual = {
-    _id: "@I_Maria_Ralenkotter@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Maria /Ralenkotter/",
     GIVN: "Maria",
     SURN: "Ralenkotter"
 };
 
 const I_JULIA_RALENKOTTER: Individual = {
-    _id: "@I_Julia_Ralenkotter@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Julia /Ralenkotter/",
     GIVN: "Julia",
     SURN: "Ralenkotter"
 };
 
 const I_GARY_PILGRIM: Individual = {
-    _id: "@I_Gary_Pilgrim@",
+    _id: `@I_${crypto.randomUUID()}@`,
     NAME: "Gary /Pilgrim/",
     GIVN: "Gary",
     SURN: "Pilgrim"
 };
 
 const F_THOMAS_GERALDINE_RALENKOTTER: Family = {
-    _id: "@F_Thomas_Geraldine_Ralenkotter@",
+    _id: `@F_${crypto.randomUUID()}@`,
     HUSB: I_THOMAS_RALENKOTTER,
     WIFE: I_GERALDINE_PILGRIM,
     CHIL: [I_TODD_RALENKOTTER, I_TONY_RALENKOTTER, I_THERESA_URSIN]
 };
 
 const F_GARY_GERALINE_PILGRIM: Family = {
-    _id: "@F_Gary_Geraldine_Pilgrim@",
+    _id: `@F_${crypto.randomUUID()}@`,
     HUSB: I_GARY_PILGRIM,
     WIFE: I_GERALDINE_PILGRIM
 };
 
 const F_TONY_ANNE_RALENKOTTER: Family = {
-    _id: "@F_Tony_Anne_Ralenkotter@",
+    _id: `@F_${crypto.randomUUID()}@`,
     HUSB: I_TONY_RALENKOTTER,
     WIFE: I_ANNE_RALENKOTTER,
     CHIL: [I_MARIA_RALENKOTTER, I_JULIA_RALENKOTTER]
 };
 
 const F_KEN_CHRISTINE_SHARRATT: Family = {
-    _id: "@F_KEN_CHRISTINE_SHARRATT@",
+    _id: `@F_${crypto.randomUUID()}@`,
     HUSB: I_KEN_SHARRATT,
     WIFE: I_CHRISTINE_SHARRATT,
     CHIL: [I_KELLY_SHARRATT, I_ERIN_URSIN]
 };
 
 const F_DAN_ERIN_URSIN: Family = {
-    _id: "@F_DAN_ERIN_URSIN@",
+    _id: `@F_${crypto.randomUUID()}@`,
     HUSB: I_DAN_URSIN,
     WIFE: I_ERIN_URSIN,
     MARR: "2014-09-13",
@@ -217,14 +219,14 @@ const F_DAN_ERIN_URSIN: Family = {
 };
 
 const F_STEVEN_THERESA_URSIN: Family = {
-    _id: "@F_STEVEN_THERESA_URSIN@",
+    _id: `@F_${crypto.randomUUID()}@`,
     HUSB: I_STEVEN_URSIN,
     WIFE: I_THERESA_URSIN,
     CHIL: [I_DAN_URSIN, I_MICHAEL_URSIN, I_REBECCA_URSIN]
 };
 
 const F_DONALD_JOYCE_URSIN: Family = {
-    _id: "@F_DONALD_JOYCE_URSIN@",
+    _id: `@F_${crypto.randomUUID()}@`,
     HUSB: I_DONALD_URSIN,
     WIFE: I_JOYCE_URSIN,
     CHIL: [I_STEVEN_URSIN]
