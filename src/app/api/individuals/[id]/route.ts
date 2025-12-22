@@ -1,9 +1,9 @@
-import { Individual, IndividualIdentifier } from "@/types";
 import { getFamilyAsJson, writeGedcom } from "@/services/gedcomService";
 
+import { Individual } from "@/types";
 import { NextResponse } from "next/server";
 
-export async function GET(_: Request, ctx: { params: Promise<{ id: IndividualIdentifier }> }) {
+export async function GET(_: Request, ctx: { params: Promise<{ id: string }> }) {
     const { id } = await ctx.params;
     const gedcomData = await getFamilyAsJson();
     const individuals = gedcomData.individuals;
@@ -12,7 +12,7 @@ export async function GET(_: Request, ctx: { params: Promise<{ id: IndividualIde
     return NextResponse.json({ individual });
 }
 
-export async function PUT(req: Request, ctx: { params: Promise<{ id: IndividualIdentifier }> }) {
+export async function PUT(req: Request, ctx: { params: Promise<{ id: string }> }) {
     const { id } = await ctx.params;
     const gedcomData = await getFamilyAsJson();
     const individuals = gedcomData.individuals;
