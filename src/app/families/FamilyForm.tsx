@@ -45,15 +45,10 @@ export default function FamilyForm({ mode, initial, individuals }: Props) {
                 body: JSON.stringify(payload)
             });
 
-            if (!res.ok) {
-                const data = (await res.json().catch(() => null)) as any;
-                throw new Error(data?.error || `Request failed (${res.status})`);
-            }
-
             const data = (await res.json()) as { family: Family };
-            //window.location.href = `/families/${encodeURIComponent(data.family._id)}/edit`;
-        } catch (err: any) {
-            setError(err?.message ?? "Something went wrong");
+            window.location.href = `/families/${encodeURIComponent(data.family._id)}/edit`;
+        } catch {
+            setError("Something went wrong");
         }
     }
 
@@ -69,7 +64,7 @@ export default function FamilyForm({ mode, initial, individuals }: Props) {
                         Husband (HUSB)
                         <select
                             value={form.HUSB}
-                            onChange={(e) => setForm({ ...form, HUSB: e.target.value as any })}
+                            onChange={(e) => setForm({ ...form, HUSB: e.target.value as IndividualIdentifier })}
                             style={{ display: "block", width: "100%", padding: 6 }}
                         >
                             <option value="">(unset)</option>
@@ -85,7 +80,7 @@ export default function FamilyForm({ mode, initial, individuals }: Props) {
                         Wife (WIFE)
                         <select
                             value={form.WIFE}
-                            onChange={(e) => setForm({ ...form, WIFE: e.target.value as any })}
+                            onChange={(e) => setForm({ ...form, WIFE: e.target.value as IndividualIdentifier })}
                             style={{ display: "block", width: "100%", padding: 6 }}
                         >
                             <option value="">(unset)</option>

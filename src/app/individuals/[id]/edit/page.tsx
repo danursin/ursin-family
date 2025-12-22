@@ -17,7 +17,7 @@ export default function EditIndividualPage() {
             const data = (await response.json()) as { individual: Individual };
             setIndividual(data.individual);
         })();
-    }, []);
+    }, [id]);
 
     useEffect(() => {
         (async () => {
