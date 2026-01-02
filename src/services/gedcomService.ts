@@ -3,7 +3,6 @@ import s3, { BUCKET_NAME, OBJECT_NAME } from "./s3/client";
 
 import { GedcomData } from "@/types";
 import cache from "./cacheService";
-import parseGedcom from "./scripts/read-gedcom";
 import toGedcomString from "./scripts/write-gedcom";
 
 export async function writeGedcom(gedcomData: GedcomData): Promise<GedcomData> {
@@ -39,10 +38,4 @@ export async function getFamilyAsGedcomString(): Promise<string> {
     }
 
     throw new Error(`Failed to fetch ${OBJECT_NAME} from ${BUCKET_NAME}`);
-}
-
-export async function getFamilyAsJson(): Promise<GedcomData> {
-    const gedcomString = await getFamilyAsGedcomString();
-    const parsed = parseGedcom(gedcomString);
-    return parsed;
 }

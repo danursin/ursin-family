@@ -2,28 +2,28 @@
 
 import { useEffect, useState } from "react";
 import IndividualForm from "../../IndividualForm";
-import { Family, Individual, type IndividualIdentifier } from "@/types";
+import { FamilyItem, IndividualItem, type IndividualIdentifier } from "@/types";
 import { useParams } from "next/navigation";
 
 export default function EditIndividualPage() {
     const { id } = useParams<{ id: IndividualIdentifier }>();
 
-    const [individual, setIndividual] = useState<Individual>();
-    const [families, setFamilies] = useState<Family[]>();
+    const [individual, setIndividual] = useState<IndividualItem>();
+    const [families, setFamilies] = useState<FamilyItem[]>();
 
     useEffect(() => {
         (async () => {
             const response = await fetch(`/api/individuals/${id}`);
-            const data = (await response.json()) as { individual: Individual };
-            setIndividual(data.individual);
+            const data = (await response.json()) as IndividualItem;
+            setIndividual(data);
         })();
     }, [id]);
 
     useEffect(() => {
         (async () => {
             const response = await fetch(`/api/families`);
-            const data = (await response.json()) as { families: Family[] };
-            setFamilies(data.families);
+            const data = (await response.json()) as FamilyItem[];
+            setFamilies(data);
         })();
     }, []);
 

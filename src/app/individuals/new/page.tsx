@@ -2,17 +2,17 @@
 
 import { useEffect, useState } from "react";
 
-import { Family } from "@/types";
+import { FamilyItem } from "@/types";
 import IndividualForm from "../IndividualForm";
 
 export default function NewIndividualPage() {
-    const [families, setFamilies] = useState<Family[]>();
+    const [families, setFamilies] = useState<FamilyItem[]>();
 
     useEffect(() => {
         (async () => {
             const response = await fetch("/api/families");
-            const data = (await response.json()) as { families: Family[] };
-            setFamilies(data.families);
+            const data = (await response.json()) as FamilyItem[];
+            setFamilies(data);
         })();
     }, []);
 

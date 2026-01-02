@@ -1,4 +1,4 @@
-import type { GedcomData, Individual } from "../../types/index.js";
+import type { GedcomData, IndividualItem } from "../../types/index.js";
 
 function toGedcomDate(dateStr: string): string {
     const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
@@ -25,17 +25,17 @@ export function toGedcomString(gedcom: GedcomData): string {
     lines.push(`1 SOUR ${gedcom.header.SOUR}`);
     lines.push(`2 NAME ${gedcom.header.NAME}`);
 
-    lines.push(`1 SUBM ${gedcom.header.SUBM._id}`);
+    lines.push(`1 SUBM ${gedcom.header.SUBM.id}`);
 
-    lines.push(`0 ${gedcom.header.SUBM._id} SUBM`);
+    lines.push(`0 ${gedcom.header.SUBM.id} SUBM`);
     lines.push(`1 NAME ${gedcom.header.SUBM.NAME}`);
 
     // Individuals
     for (const individual of gedcom.individuals) {
-        lines.push(`0 ${individual._id} INDI`);
+        lines.push(`0 ${individual.id} INDI`);
 
         // Top level individual properties
-        const { NAME, SURN, GIVN, SEX } = individual as Individual;
+        const { NAME, SURN, GIVN, SEX } = individual as IndividualItem;
         lines.push(`1 NAME ${NAME}`);
         if (GIVN) {
             lines.push(`2 GIVN ${GIVN}`);
@@ -48,7 +48,7 @@ export function toGedcomString(gedcom: GedcomData): string {
         }
 
         // Date properties
-        const dateProperties: (keyof Individual)[] = ["BIRT", "DEAT"];
+        const dateProperties: (keyof IndividualItem)[] = ["BIRT", "DEAT"];
         for (const prop of dateProperties) {
             const value = individual[prop] as string | undefined;
             if (value) {
@@ -59,20 +59,20 @@ export function toGedcomString(gedcom: GedcomData): string {
         }
 
         // Family connection
-        const fams = gedcom.families.filter((fam) => fam.HUSB === individual._id || fam.WIFE === individual._id);
+        const fams = gedcom.families.filter((fam) => fam.HUSB === individual.id || fam.WIFE === individual.id);
         for (const fam of fams) {
-            lines.push(`1 FAMS ${fam._id}`);
+            lines.push(`1 FAMS ${fam.id}`);
         }
 
-        const famc = gedcom.families.find((fam) => fam.CHIL?.includes(individual._id));
+        const famc = gedcom.families.find((fam) => fam.CHIL?.includes(individual.id));
         if (famc) {
-            lines.push(`1 FAMC ${famc._id}`);
+            lines.push(`1 FAMC ${famc.id}`);
         }
     }
 
     // Families
     for (const family of gedcom.families) {
-        lines.push(`0 ${family._id} FAM`);
+        lines.push(`0 ${family.id} FAM`);
 
         if (family.HUSB) {
             lines.push(`1 HUSB ${family.HUSB}`);

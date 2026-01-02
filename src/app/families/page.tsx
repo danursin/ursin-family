@@ -1,47 +1,47 @@
 "use client";
 
-import { Family, FamilyIdentifier, Individual, IndividualIdentifier } from "@/types";
+import { FamilyIdentifier, FamilyItem, IndividualIdentifier, IndividualItem } from "@/types";
 import { useCallback, useEffect, useState } from "react";
 
 import Link from "next/link";
 
 export default function FamiliesIndexPage() {
-    const [families, setFamilies] = useState<Family[]>();
-    const [individuals, setIndividuals] = useState<Individual[]>();
+    const [families, setFamilies] = useState<FamilyItem[]>();
+    const [individuals, setIndividuals] = useState<IndividualItem[]>();
 
     useEffect(() => {
         (async () => {
             const response = await fetch("/api/families");
-            const data = (await response.json()) as { families: Family[] };
-            setFamilies(data.families);
+            const data = (await response.json()) as FamilyItem[];
+            setFamilies(data);
         })();
     }, []);
 
     useEffect(() => {
         (async () => {
             const response = await fetch("/api/individuals");
-            const data = (await response.json()) as { individuals: Individual[] };
-            setIndividuals(data.individuals);
+            const data = (await response.json()) as IndividualItem[];
+            setIndividuals(data);
         })();
     }, []);
 
     const getFamilyById = useCallback(
-        (id: FamilyIdentifier): Family => {
+        (id: FamilyIdentifier): FamilyItem => {
             if (!families) {
                 throw new Error("No families yet");
             }
-            const family = families.find((f) => f._id === id) as Family;
+            const family = families.find((f) => f.id === id) as FamilyItem;
             return family;
         },
         [families]
     );
 
     const getIndividualById = useCallback(
-        (id: IndividualIdentifier): Individual => {
+        (id: IndividualIdentifier): IndividualItem => {
             if (!individuals) {
                 throw new Error("No individuals yet");
             }
-            const individual = individuals.find((f) => f._id === id) as Individual;
+            const individual = individuals.find((f) => f.id === id) as IndividualItem;
             return individual;
         },
         [individuals]
@@ -67,8 +67,8 @@ export default function FamiliesIndexPage() {
                         const husband = f.HUSB && getIndividualById(f.HUSB);
                         const wife = f.WIFE && getIndividualById(f.WIFE);
                         return (
-                            <li key={f._id} style={{ marginBottom: 6 }}>
-                                <Link href={`/families/${encodeURIComponent(f._id)}/edit`}>
+                            <li key={f.id} style={{ marginBottom: 6 }}>
+                                <Link href={`/families/${encodeURIComponent(f.id)}/edit`}>
                                     {husband?.GIVN} & {wife?.GIVN} {husband?.SURN}
                                 </Link>{" "}
                             </li>

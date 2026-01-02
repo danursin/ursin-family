@@ -1,32 +1,48 @@
-import { getFamilyAsJson, writeGedcom } from "@/services/gedcomService";
+import { GetCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import dynamodb, { TABLE_NAME } from "@/db/dynamodb";
 
-import { Family } from "@/types";
+import { FamilyItem } from "@/types";
 import { NextResponse } from "next/server";
 
 export async function GET(_: Request, ctx: { params: Promise<{ id: string }> }) {
     const { id } = await ctx.params;
-    const gedcomData = await getFamilyAsJson();
-    const families = gedcomData.families;
-    const family = families.find((i) => i._id === id);
+    const { Item: family } = await dynamodb.send(
+        new GetCommand({
+            TableName: TABLE_NAME,
+            Key: {
+                PK: `FAMILY#${id}`,
+                SK: "PROFILE"
+            }
+        })
+    );
     if (!family) return NextResponse.json({ error: "Not found" }, { status: 404 });
-    return NextResponse.json({ family });
+    return NextResponse.json(family);
 }
 
 export async function PUT(req: Request, ctx: { params: Promise<{ id: string }> }) {
     const { id } = await ctx.params;
-    const gedcomData = await getFamilyAsJson();
-    const families = gedcomData.families;
-    const existing = families.find((i) => i._id === id);
-    if (!existing) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    const { DIV, MARR, HUSB, WIFE, CHIL } = (await req.json()) as Partial<FamilyItem>;
+    const updates = {
+        DIV,
+        MARR,
+        HUSB,
+        WIFE,
+        CHIL
+    };
 
-    const body = (await req.json()) as Partial<Family>;
+    const response = await dynamodb.send(
+        new UpdateCommand({
+            TableName: TABLE_NAME,
+            Key: {
+                PK: `FAMILY#${id}`,
+                SK: "PROFILE"
+            },
+            UpdateExpression: `SET ${Object.keys(updates).map((k) => `#${k} = :${k}`)}`,
+            ExpressionAttributeNames: Object.fromEntries(Object.keys(updates).map((k) => [`#${k}`, k])),
+            ExpressionAttributeValues: Object.fromEntries(Object.entries(updates).map(([key, value]) => [`:${key}`, value])),
+            ReturnValues: "ALL_NEW"
+        })
+    );
 
-    // overwrite properties from body
-    for (const [key, value] of Object.entries(body)) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (existing as any)[key] = value;
-    }
-
-    await writeGedcom(gedcomData);
-    return NextResponse.json({ family: existing });
+    return NextResponse.json({ family: response.Attributes });
 }

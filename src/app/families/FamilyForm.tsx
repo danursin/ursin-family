@@ -1,12 +1,12 @@
 "use client";
 
-import type { Family, Individual, IndividualIdentifier } from "@/types";
+import type { FamilyItem, IndividualIdentifier, IndividualItem } from "@/types";
 import { useMemo, useState } from "react";
 
 type Props = {
     mode: "create" | "edit";
-    initial?: Family;
-    individuals: Individual[];
+    initial?: FamilyItem;
+    individuals: IndividualItem[];
 };
 
 export default function FamilyForm({ mode, initial, individuals }: Props) {
@@ -20,13 +20,13 @@ export default function FamilyForm({ mode, initial, individuals }: Props) {
         DIV: initial?.DIV ?? ""
     });
 
-    const title = useMemo(() => (mode === "create" ? "Create Family" : `Edit Family ${initial?._id}`), [mode, initial]);
+    const title = useMemo(() => (mode === "create" ? "Create Family" : `Edit Family ${initial?.id}`), [mode, initial]);
 
     async function onSubmit(e: React.FormEvent) {
         e.preventDefault();
         setError(null);
 
-        const payload: Partial<Family> = {
+        const payload: Partial<FamilyItem> = {
             HUSB: form.HUSB || undefined,
             WIFE: form.WIFE || undefined,
             CHIL: form.CHIL,
@@ -35,7 +35,7 @@ export default function FamilyForm({ mode, initial, individuals }: Props) {
         };
 
         try {
-            const url = mode === "create" ? "/api/families" : `/api/families/${encodeURIComponent(initial!._id)}`;
+            const url = mode === "create" ? "/api/families" : `/api/families/${encodeURIComponent(initial!.id)}`;
 
             const method = mode === "create" ? "POST" : "PUT";
 
@@ -45,8 +45,8 @@ export default function FamilyForm({ mode, initial, individuals }: Props) {
                 body: JSON.stringify(payload)
             });
 
-            const data = (await res.json()) as { family: Family };
-            window.location.href = `/families/${encodeURIComponent(data.family._id)}/edit`;
+            const data = (await res.json()) as FamilyItem;
+            window.location.href = `/families/${encodeURIComponent(data.id)}/edit`;
         } catch {
             setError("Something went wrong");
         }
@@ -69,7 +69,7 @@ export default function FamilyForm({ mode, initial, individuals }: Props) {
                         >
                             <option value="">(unset)</option>
                             {individuals.map((i) => (
-                                <option key={i._id} value={i._id}>
+                                <option key={i.id} value={i.id}>
                                     {i.NAME}
                                 </option>
                             ))}
@@ -85,7 +85,7 @@ export default function FamilyForm({ mode, initial, individuals }: Props) {
                         >
                             <option value="">(unset)</option>
                             {individuals.map((i) => (
-                                <option key={i._id} value={i._id}>
+                                <option key={i.id} value={i.id}>
                                     {i.NAME}
                                 </option>
                             ))}
@@ -131,7 +131,7 @@ export default function FamilyForm({ mode, initial, individuals }: Props) {
                             style={{ width: "100%", padding: 6 }}
                         >
                             {individuals.map((i) => (
-                                <option key={i._id} value={i._id}>
+                                <option key={i.id} value={i.id}>
                                     {i.NAME}
                                 </option>
                             ))}

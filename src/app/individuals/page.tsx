@@ -2,10 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { Individual } from "@/types";
+import { IndividualItem } from "@/types";
 import Link from "next/link";
 
-function individualLabel(i: Individual) {
+function individualLabel(i: IndividualItem) {
     const name = (i.NAME || "").trim();
     if (name) return name;
 
@@ -15,17 +15,17 @@ function individualLabel(i: Individual) {
     const combined = [surn, givn].filter(Boolean).join(", ").trim();
     if (combined) return combined;
 
-    return i._id;
+    return i.id;
 }
 
 export default function IndividualsIndexPage() {
-    const [individuals, setIndividuals] = useState<Individual[]>();
+    const [individuals, setIndividuals] = useState<IndividualItem[]>();
 
     useEffect(() => {
         (async () => {
             const response = await fetch("/api/individuals");
-            const data = (await response.json()) as { individuals: Individual[] };
-            setIndividuals(data.individuals);
+            const data = (await response.json()) as IndividualItem[];
+            setIndividuals(data);
         })();
     }, []);
 
@@ -51,9 +51,9 @@ export default function IndividualsIndexPage() {
             ) : (
                 <ul style={{ paddingLeft: 18 }}>
                     {sorted.map((i) => (
-                        <li key={i._id} style={{ marginBottom: 6 }}>
-                            <Link href={`/individuals/${encodeURIComponent(i._id)}/edit`}>{individualLabel(i)}</Link>{" "}
-                            <span style={{ color: "#666" }}>{i._id}</span>
+                        <li key={i.id} style={{ marginBottom: 6 }}>
+                            <Link href={`/individuals/${encodeURIComponent(i.id)}/edit`}>{individualLabel(i)}</Link>{" "}
+                            <span style={{ color: "#666" }}>{i.id}</span>
                         </li>
                     ))}
                 </ul>

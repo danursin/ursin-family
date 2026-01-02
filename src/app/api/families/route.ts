@@ -1,32 +1,50 @@
 import * as crypto from "node:crypto";
 
-import { getFamilyAsJson, writeGedcom } from "@/services/gedcomService";
+import { FamilyIdentifier, FamilyItem } from "@/types";
+import { PutCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
+import dynamodb, { TABLE_NAME } from "@/db/dynamodb";
 
-import { Family } from "@/types";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-    const gedcomData = await getFamilyAsJson();
-    const families = gedcomData.families;
-    return NextResponse.json({ families });
+    const { Items } = await dynamodb.send(
+        new QueryCommand({
+            TableName: TABLE_NAME,
+            IndexName: "GSI1",
+            KeyConditionExpression: "#GSI1PK = :GSI1PK",
+            ExpressionAttributeNames: {
+                "#GSI1PK": "GSI1PK"
+            },
+            ExpressionAttributeValues: {
+                ":GSI1PK": "FAMILY"
+            }
+        })
+    );
+
+    return NextResponse.json(Items);
 }
 
 export async function POST(req: Request) {
-    const body = (await req.json()) as Partial<Family>;
+    const body = (await req.json()) as Partial<FamilyItem>;
 
-    const created: Family = {
-        _id: `@F_${crypto.randomUUID()}@`,
-        HUSB: body.HUSB || undefined,
-        WIFE: body.WIFE || undefined,
-        CHIL: Array.isArray(body.CHIL) ? body.CHIL : [],
-        MARR: body.MARR?.trim() || undefined,
-        DIV: body.DIV?.trim() || undefined
+    const id: FamilyIdentifier = `@F_${crypto.randomUUID()}@`;
+    const updates: FamilyItem = {
+        PK: `FAMILY#${id}`,
+        SK: "PROFILE",
+        Type: "FAMILY",
+        GSI1PK: "FAMILY",
+        GSI1SK: id,
+        id,
+        ...body
     };
 
-    const gedcomData = await getFamilyAsJson();
-    gedcomData.families.push(created);
+    await dynamodb.send(
+        new PutCommand({
+            TableName: TABLE_NAME,
+            Item: updates,
+            ReturnValues: "NONE"
+        })
+    );
 
-    await writeGedcom(gedcomData);
-
-    return NextResponse.json({ family: created }, { status: 201 });
+    return NextResponse.json(updates, { status: 201 });
 }

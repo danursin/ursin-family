@@ -1,12 +1,12 @@
 "use client";
 
-import type { Family, FamilyIdentifier, Individual } from "@/types";
+import type { FamilyIdentifier, FamilyItem, IndividualItem } from "@/types";
 import { useMemo, useState } from "react";
 
 type Props = {
     mode: "create" | "edit";
-    initial?: Individual;
-    families: Family[];
+    initial?: IndividualItem;
+    families: FamilyItem[];
 };
 
 export default function IndividualForm({ mode, initial, families }: Props) {
@@ -16,14 +16,14 @@ export default function IndividualForm({ mode, initial, families }: Props) {
         NAME: initial?.NAME ?? "",
         GIVN: initial?.GIVN ?? "",
         SURN: initial?.SURN ?? "",
-        SEX: (initial?.SEX ?? "") as "" | "M" | "F",
+        SEX: (initial?.SEX ?? "") as "M" | "F",
         BIRT: initial?.BIRT ?? "",
         DEAT: initial?.DEAT ?? "",
         FAMC: (initial?.FAMC ?? "") as "" | FamilyIdentifier,
         FAMS: (initial?.FAMS ?? "") as "" | FamilyIdentifier
     });
 
-    const title = useMemo(() => (mode === "create" ? "Create Individual" : `Edit Individual ${initial?._id}`), [mode, initial]);
+    const title = useMemo(() => (mode === "create" ? "Create Individual" : `Edit Individual ${initial?.id}`), [mode, initial]);
 
     async function onSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -33,7 +33,7 @@ export default function IndividualForm({ mode, initial, families }: Props) {
             NAME: form.NAME || undefined,
             GIVN: form.GIVN || undefined,
             SURN: form.SURN || undefined,
-            SEX: (form.SEX || undefined) as Individual["SEX"],
+            SEX: form.SEX || undefined,
             BIRT: form.BIRT || undefined,
             DEAT: form.DEAT || undefined,
             FAMC: form.FAMC || undefined,
@@ -41,7 +41,7 @@ export default function IndividualForm({ mode, initial, families }: Props) {
         };
 
         try {
-            const url = mode === "create" ? "/api/individuals" : `/api/individuals/${encodeURIComponent(initial!._id)}`;
+            const url = mode === "create" ? "/api/individuals" : `/api/individuals/${encodeURIComponent(initial!.id)}`;
 
             const method = mode === "create" ? "POST" : "PUT";
 
@@ -57,8 +57,8 @@ export default function IndividualForm({ mode, initial, families }: Props) {
                 throw new Error(data?.error || `Request failed (${res.status})`);
             }
 
-            const data = (await res.json()) as { individual: Individual };
-            window.location.href = `/individuals/${encodeURIComponent(data.individual._id)}/edit`;
+            const data = (await res.json()) as IndividualItem;
+            window.location.href = `/individuals/${encodeURIComponent(data.id)}/edit`;
         } catch (err) {
             setError((err as Error)?.message ?? "Something went wrong");
         }
@@ -148,8 +148,8 @@ export default function IndividualForm({ mode, initial, families }: Props) {
                         >
                             <option value="">(none)</option>
                             {families.map((f) => (
-                                <option key={f._id} value={f._id}>
-                                    {f._id}
+                                <option key={f.id} value={f.id}>
+                                    {f.id}
                                 </option>
                             ))}
                         </select>
@@ -165,8 +165,8 @@ export default function IndividualForm({ mode, initial, families }: Props) {
                         >
                             <option value="">(none)</option>
                             {families.map((f) => (
-                                <option key={f._id} value={f._id}>
-                                    {f._id}
+                                <option key={f.id} value={f.id}>
+                                    {f.id}
                                 </option>
                             ))}
                         </select>
