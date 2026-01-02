@@ -22,13 +22,15 @@ export async function GET(_: Request, ctx: { params: Promise<{ id: string }> }) 
 export async function PUT(req: Request, ctx: { params: Promise<{ id: string }> }) {
     const { id } = await ctx.params;
     const { DIV, MARR, HUSB, WIFE, CHIL } = (await req.json()) as Partial<FamilyItem>;
-    const updates = {
-        DIV,
-        MARR,
-        HUSB,
-        WIFE,
-        CHIL
-    };
+    const updates = Object.fromEntries(
+        Object.entries({
+            DIV,
+            MARR,
+            HUSB,
+            WIFE,
+            CHIL
+        }).filter(([, v]) => v !== undefined)
+    ) as Partial<FamilyItem>;
 
     const response = await dynamodb.send(
         new UpdateCommand({
