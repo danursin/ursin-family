@@ -2,7 +2,6 @@ import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import s3, { BUCKET_NAME, OBJECT_NAME } from "./s3/client";
 
 import { GedcomData } from "@/types";
-import cache from "./cacheService";
 import toGedcomString from "./scripts/write-gedcom";
 
 export async function writeGedcom(gedcomData: GedcomData): Promise<GedcomData> {
@@ -14,16 +13,10 @@ export async function writeGedcom(gedcomData: GedcomData): Promise<GedcomData> {
             Body: gedcomString
         })
     );
-    cache.put(gedcomString);
     return gedcomData;
 }
 
 export async function getFamilyAsGedcomString(): Promise<string> {
-    const cached = cache.get();
-    if (cached) {
-        return cached;
-    }
-
     const response = await s3.send(
         new GetObjectCommand({
             Bucket: BUCKET_NAME,
@@ -33,7 +26,6 @@ export async function getFamilyAsGedcomString(): Promise<string> {
 
     if (response.Body) {
         const data = await response.Body.transformToString();
-        cache.put(data);
         return data;
     }
 
