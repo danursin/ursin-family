@@ -44,5 +44,5 @@ export async function PUT(req: Request, ctx: { params: Promise<{ id: string }> }
         })
     );
 
-    return NextResponse.json({ family: response.Attributes });
+    return NextResponse.json({ id, ...response.Attributes });
 }
