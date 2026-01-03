@@ -1,63 +1,89 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-
-import { IndividualItem } from "@/types";
+import AddIcon from "@mui/icons-material/Add";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import IndividualLink from "../components/IndividualLink";
 import Link from "next/link";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import useFamily from "../hooks/useFamily";
 
-function individualLabel(i: IndividualItem) {
-    const name = (i.NAME || "").trim();
-    if (name) return name;
+export default function FamiliesIndexPage() {
+    const { getIndividuals } = useFamily();
 
-    const givn = (i.GIVN || "").trim();
-    const surn = (i.SURN || "").trim();
-
-    const combined = [surn, givn].filter(Boolean).join(", ").trim();
-    if (combined) return combined;
-
-    return i.id;
-}
-
-export default function IndividualsIndexPage() {
-    const [individuals, setIndividuals] = useState<IndividualItem[]>();
-
-    useEffect(() => {
-        (async () => {
-            const response = await fetch("/api/individuals");
-            const data = (await response.json()) as IndividualItem[];
-            setIndividuals(data);
-        })();
-    }, []);
-
-    const sorted = useMemo(() => {
-        if (!individuals) return [];
-        return [...individuals].sort((a, b) => individualLabel(a).localeCompare(individualLabel(b), undefined, { sensitivity: "base" }));
-    }, [individuals]);
-
-    if (!individuals) {
-        return <p>Loading...</p>;
-    }
+    const individuals = getIndividuals();
 
     return (
-        <div style={{ maxWidth: 720, margin: "20px auto", fontFamily: "system-ui, sans-serif" }}>
-            <h1 style={{ marginBottom: 12 }}>Individuals</h1>
+        <Container maxWidth="md" sx={{ py: 3 }}>
+            <Stack spacing={2}>
+                <Stack
+                    direction={{ xs: "column", sm: "row" }}
+                    spacing={1.5}
+                    alignItems={{ xs: "stretch", sm: "center" }}
+                    justifyContent="space-between"
+                >
+                    <div>
+                        <Typography variant="h4" sx={{ fontWeight: 700 }}>
+                            Individuals
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            {individuals.length} Individual record(s)
+                        </Typography>
+                    </div>
 
-            <div style={{ marginBottom: 12 }}>
-                <Link href="/individuals/new">Create individual</Link>
-            </div>
+                    <Button
+                        component={Link}
+                        href="/individuals/new"
+                        variant="contained"
+                        startIcon={<AddIcon />}
+                        sx={{ whiteSpace: "nowrap" }}
+                    >
+                        Add individual
+                    </Button>
+                </Stack>
 
-            {sorted.length === 0 ? (
-                <p>No individuals yet.</p>
-            ) : (
-                <ul style={{ paddingLeft: 18 }}>
-                    {sorted.map((i) => (
-                        <li key={i.id} style={{ marginBottom: 6 }}>
-                            <Link href={`/individuals/${encodeURIComponent(i.id)}/edit`}>{individualLabel(i)}</Link>{" "}
-                            <span style={{ color: "#666" }}>{i.id}</span>
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
+                <Paper variant="outlined">
+                    <TableContainer>
+                        <Table size="small" aria-label="Individuals table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell sx={{ fontWeight: 700 }}>Name</TableCell>
+                                    <TableCell sx={{ fontWeight: 700 }}>DOB</TableCell>
+                                    <TableCell sx={{ fontWeight: 700 }}>DOD</TableCell>
+                                    <TableCell sx={{ fontWeight: 700 }} align="right">
+                                        Action
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+
+                            <TableBody>
+                                {individuals.map((i) => {
+                                    return (
+                                        <TableRow key={i.id} hover>
+                                            <TableCell>
+                                                <IndividualLink id={i.id} />
+                                            </TableCell>
+                                            <TableCell>{i.BIRT}</TableCell>
+                                            <TableCell>{i.DEAT}</TableCell>
+                                            <TableCell align="right">
+                                                <IndividualLink id={i.id} text="Edit" />
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Paper>
+            </Stack>
+        </Container>
     );
 }
