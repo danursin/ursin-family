@@ -1,16 +1,21 @@
 "use client";
 
-import type { FamilyIdentifier, FamilyItem, IndividualItem } from "@/types";
+import type { FamilyIdentifier, IndividualItem } from "@/types";
 import { useMemo, useState } from "react";
+
+import useFamily from "../hooks/useFamily";
 
 type Props = {
     mode: "create" | "edit";
     initial?: IndividualItem;
-    families: FamilyItem[];
 };
 
-export default function IndividualForm({ mode, initial, families }: Props) {
+export default function IndividualForm({ mode, initial }: Props) {
     const [error, setError] = useState<string | null>(null);
+
+    const { getFamilies } = useFamily();
+
+    const families = getFamilies();
 
     const [form, setForm] = useState({
         NAME: initial?.NAME ?? "",
@@ -147,7 +152,7 @@ export default function IndividualForm({ mode, initial, families }: Props) {
                             style={{ display: "block", width: "100%", padding: 6 }}
                         >
                             <option value="">(none)</option>
-                            {families.map((f) => (
+                            {families?.map((f) => (
                                 <option key={f.id} value={f.id}>
                                     {f.id}
                                 </option>
@@ -164,7 +169,7 @@ export default function IndividualForm({ mode, initial, families }: Props) {
                             style={{ display: "block", width: "100%", padding: 6 }}
                         >
                             <option value="">(none)</option>
-                            {families.map((f) => (
+                            {families?.map((f) => (
                                 <option key={f.id} value={f.id}>
                                     {f.id}
                                 </option>

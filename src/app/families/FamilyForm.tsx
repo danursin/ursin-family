@@ -1,16 +1,20 @@
 "use client";
 
-import type { FamilyItem, IndividualIdentifier, IndividualItem } from "@/types";
+import type { FamilyItem, IndividualIdentifier } from "@/types";
 import { useMemo, useState } from "react";
+
+import useFamily from "../hooks/useFamily";
 
 type Props = {
     mode: "create" | "edit";
     initial?: FamilyItem;
-    individuals: IndividualItem[];
 };
 
-export default function FamilyForm({ mode, initial, individuals }: Props) {
+export default function FamilyForm({ mode, initial }: Props) {
     const [error, setError] = useState<string | null>(null);
+    const { getIndividuals } = useFamily();
+
+    const individuals = getIndividuals();
 
     const [form, setForm] = useState({
         HUSB: (initial?.HUSB ?? "") as "" | IndividualIdentifier,
@@ -68,7 +72,7 @@ export default function FamilyForm({ mode, initial, individuals }: Props) {
                             style={{ display: "block", width: "100%", padding: 6 }}
                         >
                             <option value="">(unset)</option>
-                            {individuals.map((i) => (
+                            {individuals?.map((i) => (
                                 <option key={i.id} value={i.id}>
                                     {i.NAME}
                                 </option>
@@ -84,7 +88,7 @@ export default function FamilyForm({ mode, initial, individuals }: Props) {
                             style={{ display: "block", width: "100%", padding: 6 }}
                         >
                             <option value="">(unset)</option>
-                            {individuals.map((i) => (
+                            {individuals?.map((i) => (
                                 <option key={i.id} value={i.id}>
                                     {i.NAME}
                                 </option>
@@ -119,7 +123,6 @@ export default function FamilyForm({ mode, initial, individuals }: Props) {
 
                         <select
                             multiple
-                            size={Math.min(10, individuals.length)}
                             value={form.CHIL}
                             onChange={(e) => {
                                 const selected = Array.from(e.currentTarget.selectedOptions).map(
@@ -130,7 +133,7 @@ export default function FamilyForm({ mode, initial, individuals }: Props) {
                             }}
                             style={{ width: "100%", padding: 6 }}
                         >
-                            {individuals.map((i) => (
+                            {individuals?.map((i) => (
                                 <option key={i.id} value={i.id}>
                                     {i.NAME}
                                 </option>
