@@ -30,7 +30,6 @@ export async function PUT(req: Request, ctx: { params: Promise<{ id: string }> }
             SEX: body.SEX,
             BIRT: body.BIRT,
             DEAT: body.DEAT,
-            FAMC: body.FAMC,
             FAMS: body.FAMS,
             OBJE: body.OBJE
         }).filter(([, v]) => v !== undefined)

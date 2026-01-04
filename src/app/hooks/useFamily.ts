@@ -8,6 +8,10 @@ type UseFamilyProps = {
     getFamily: (id: FamilyIdentifier) => FamilyItem;
     getIndividuals: () => IndividualItem[];
     getFamilies: () => FamilyItem[];
+    getFamilyName: (id: FamilyIdentifier) => string;
+    getIndividualName: (id: IndividualIdentifier) => string;
+    getFamilyWhereChild: (id: IndividualIdentifier) => FamilyItem | undefined;
+    getFamiliesWhereSpouse: (id: IndividualIdentifier) => FamilyItem[];
 };
 
 export default function useFamily(): UseFamilyProps {
@@ -30,5 +34,53 @@ export default function useFamily(): UseFamilyProps {
     const getIndividuals = useCallback(() => individuals, [individuals]);
     const getFamilies = useCallback(() => families, [families]);
 
-    return { getIndividual, getFamily, getIndividuals, getFamilies };
+    const getIndividualName = useCallback(
+        (id: IndividualIdentifier) => {
+            const individual = individualById.get(id)!;
+            const display = `${individual.SURN}, ${individual.GIVN}`;
+            return display;
+        },
+        [individualById]
+    );
+
+    const getFamilyName = useCallback(
+        (id: FamilyIdentifier) => {
+            const { HUSB, WIFE } = familyById.get(id)!;
+
+            if (HUSB && WIFE) {
+                return `${getIndividualName(HUSB)} and ${getIndividualName(WIFE)}`;
+            }
+            if (HUSB) return getIndividualName(HUSB);
+            if (WIFE) return getIndividualName(WIFE);
+            return "Unknown";
+        },
+        [familyById, getIndividualName]
+    );
+
+    const getFamilyWhereChild = useCallback(
+        (id: IndividualIdentifier) => {
+            const family = families.find((i) => i.CHIL?.includes(id));
+            return family;
+        },
+        [families]
+    );
+
+    const getFamiliesWhereSpouse = useCallback(
+        (id: IndividualIdentifier) => {
+            const fams = families.filter((f) => f.HUSB === id || f.WIFE === id);
+            return fams;
+        },
+        [families]
+    );
+
+    return {
+        getIndividual,
+        getFamily,
+        getIndividuals,
+        getFamilies,
+        getFamilyName,
+        getIndividualName,
+        getFamilyWhereChild,
+        getFamiliesWhereSpouse
+    };
 }
